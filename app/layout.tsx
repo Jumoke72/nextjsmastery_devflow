@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/context/Theme";
-import Navbar from "@/components/navigation/navbar";
+import { Toaster } from "@/components/ui/sonner";
+//import { Toaster } from "sonner";
 
 const inter = localFont({
   src:"./fonts/inter-VF.ttf",
@@ -38,10 +38,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
           {children}
         </ThemeProvider>
       </body>
+      <Toaster/>
     </html>
   );
 }
