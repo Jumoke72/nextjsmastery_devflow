@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
+import { signIn } from "next-auth/react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { toast } from "sonner";
-import { signIn } from "@/auth";
 import ROUTES from "@/constants/routes";
 
 const SocialAuthForm = () => {
@@ -13,13 +13,18 @@ const SocialAuthForm = () => {
 
   const handleSignIn = async (provider: "github" | "google") => {
     try {
-
-      await signIn(provider,{callbackUrl:ROUTES.HOME, redirect:false})
+      await signIn(provider, {
+        redirectTo: ROUTES.HOME,
+        redirect: true,
+      });
     } catch (error) {
       console.log(error);
 
       toast("Sign-In Failure", {
-        description: error instanceof Error ? error.message : "An error occurred during sign-in",
+        description:
+          error instanceof Error
+            ? error.message
+            : "An error occurred during sign-in",
         action: {
           label: "Close",
           onClick: () => ({}),
