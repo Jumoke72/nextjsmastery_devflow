@@ -4,6 +4,7 @@ import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
 import HomeFilter from "@/components/filters/HomeFilter";
+import QuestionCard from "@/components/cards/QuestionCard";
 
 const questions = [
   {
@@ -14,11 +15,16 @@ const questions = [
       { _id: "1", name: "React" },
       { _id: "2", name: "React JS" },
     ],
-    author: { _id: "1", name: "John Doe" },
+    author: {
+      _id: "1",
+      name: "John Doe",
+      image:
+        "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740",
+    },
     upvotes: 10,
     answers: 5,
     views: 100,
-    createdAt: new Date(),
+    createdAt: new Date("2023-10-01"),
   },
   {
     _id: "2",
@@ -28,7 +34,12 @@ const questions = [
       { _id: "1", name: "Javascript" },
       { _id: "2", name: "JS" },
     ],
-    author: { _id: "1", name: "John Doe" },
+    author: {
+      _id: "1",
+      name: "Mary Sue",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2VroSRyQxkSOIJwbrmnCc4SyFeDgg64NZsA&s",
+    },
     upvotes: 10,
     answers: 5,
     views: 100,
@@ -41,14 +52,18 @@ interface SearchParams {
 }
 
 const Home = async ({ searchParams }: SearchParams) => {
-  const { query = "", filter="" } = await searchParams;
+  const { query = "", filter = "" } = await searchParams;
 
-    const filteredQuestions = questions.filter((question) => {
-    const matchesQuery = question.title.toLowerCase().includes(query?.toLowerCase());
+  const filteredQuestions = questions.filter((question) => {
+    const matchesQuery = question.title
+      .toLowerCase()
+      .includes(query?.toLowerCase());
     const matchesFilter = filter
-      ? question.tags.some((tag) => tag.name.toLowerCase() === filter.toLowerCase())
+      ? question.tags.some(
+          (tag) => tag.name.toLowerCase() === filter.toLowerCase()
+        )
       : true;
-  
+
     return matchesQuery && matchesFilter;
   });
 
@@ -75,7 +90,7 @@ const Home = async ({ searchParams }: SearchParams) => {
       <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <h1 key={question._id}>{question.title}</h1>
+          <QuestionCard key={question._id} question={question} />
         ))}
       </div>
     </>
